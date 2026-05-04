@@ -1,0 +1,30 @@
+.notif-badge {
+  position: absolute;
+  top: 5px;
+  right: 5px;
+  font-size: 10px;
+}
+.alert-banner {
+  background: #ff3b30;
+  color: white;
+  padding: 10px;
+  text-align: center;
+  font-weight: bold;
+}
+
+.custom-toolbar {
+  --background: #1c1c1e !important;
+  --color: white !important;
+}
+
+ion-toolbar ion-icon {
+  color: white !important;
+}
+
+.notif-badge {
+  position: absolute;
+  top: 4px;
+  right: 4px;
+  font-size: 10px;
+}
+

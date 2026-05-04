@@ -1,3 +1,31 @@
-<p>
-  incident-card works!
-</p>
+<ion-card class="incident-card" (click)="openDetail()">
+
+  
+  <div class="severity-bar" [ngClass]="incident.severity"></div>
+
+  <ion-card-content>
+
+    <div class="card-header">
+      <h2>{{ incident.title }}</h2>
+
+      <ion-badge class="status-badge" [color]="getSeverityColor()">
+        {{ incident.status }}
+      </ion-badge>
+    </div>
+
+    <p class="description">
+      {{ incident.description }}
+    </p>
+
+    <div class="card-footer">
+      <span class="time">
+         {{ getTimeAgo() }}
+      </span>
+
+      <span *ngIf="incident.assignedTo" class="assigned">
+        👤 {{ incident.assignedTo }}
+      </span>
+    </div>
+
+  </ion-card-content>
+</ion-card>
