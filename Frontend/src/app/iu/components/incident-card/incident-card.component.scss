@@ -3,68 +3,126 @@ ion-card {
   margin: 10px;
 }
 
-.meta {
-  display: flex;
-  justify-content: space-between;
-  font-size: 12px;
-  margin-top: 10px;
-}
-
-
 .incident-card {
-  position: relative;
+  display: flex;
   border-radius: 16px;
+  overflow: hidden;
   margin: 12px;
-  box-shadow: 0 6px 16px rgba(0,0,0,0.08);
-  transition: transform 0.2s ease;
-
-  &:active {
-    transform: scale(0.98);
-  }
+  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
 }
 
+/* barra izquierda */
 .severity-bar {
-  position: absolute;
-  left: 0;
-  top: 0;
-  bottom: 0;
   width: 6px;
-  border-radius: 16px 0 0 16px;
 }
 
-.severity-bar.P1 { background: #ff3b30; }
-.severity-bar.P2 { background: #ff9500; }
-.severity-bar.P3 { background: #8e8e93; }
+.severity-bar.P1 {
+  background: #d00000;
+}
 
-.card-header {
+.severity-bar.P2 {
+  background: #f48c06;
+}
+
+.severity-bar.P3 {
+  background: #ffba08;
+}
+
+.card-content {
+  padding: 14px;
+  width: 100%;
+}
+
+/* HEADER */
+.header {
   display: flex;
   justify-content: space-between;
   align-items: center;
-
-  h2 {
-    font-size: 16px;
-    font-weight: 600;
-  }
 }
 
 
-.status-badge {
-  font-size: 11px;
-  padding: 4px 8px;
-  border-radius: 8px;
-}
-
-
-.description {
-  font-size: 14px;
-  color: #666;
-  margin-top: 6px;
-}
-
-.card-footer {
+.left {
   display: flex;
-  justify-content: space-between;
+  align-items: center;
+  gap: 8px;
+}
+
+
+.severity-badge {
+  padding: 4px 10px;
+  border-radius: 8px;
+  font-weight: bold;
+  font-size: 12px;
+}
+
+
+.severity-badge.P1 {
+  background: #ffd6d6;
+  color: #d00000;
+}
+
+.severity-badge.P2 {
+  background: #fff3cd;
+  color: #f48c06;
+}
+
+.severity-badge.P3 {
+  background: #fff8cc;
+  color: #ffba08;
+}
+
+
+.status-container {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.status {
+  padding: 4px 10px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: bold;
+}
+
+.status.OPEN {
+  background: #ffd6d6;
+  color: #d00000;
+}
+
+.status.ACKNOWLEDGED {
+  background: #fff3cd;
+  color: #f48c06;
+}
+
+.status.RESOLVED {
+  background: #e6ffed;
+  color: #2b9348;
+}
+
+
+h2 {
+  margin: 0;
+  font-size: 15px;
+  font-weight: 600;
+}
+
+
+p {
+  margin: 6px 0 0;
+  color: #666;
+  font-size: 14px;
+}
+
+
+.footer {
   margin-top: 10px;
   font-size: 12px;
   color: #888;
+}
+
+.time {
+  display: flex;
+  align-items: center;
+  gap: 6px;
 }

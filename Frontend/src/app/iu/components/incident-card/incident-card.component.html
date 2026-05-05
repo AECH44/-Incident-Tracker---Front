@@ -1,31 +1,38 @@
-<ion-card class="incident-card" (click)="openDetail()">
+<ion-card (click)="openDetail()" class="incident-card">
 
-  
   <div class="severity-bar" [ngClass]="incident.severity"></div>
 
-  <ion-card-content>
+  <div class="card-content">
 
-    <div class="card-header">
-      <h2>{{ incident.title }}</h2>
+    <div class="header">
 
-      <ion-badge class="status-badge" [color]="getSeverityColor()">
-        {{ incident.status }}
-      </ion-badge>
+      <div class="left">
+        <span class="severity-badge" [ngClass]="incident.severity">
+          {{ incident.severity }}
+        </span>
+
+        <h2>{{ incident.title }}</h2>
+      </div>
+
+      <div class="status-container">
+        <span class="status" [ngClass]="incident.status">
+          {{ incident.status }}
+        </span>
+
+        <ion-icon name="chevron-forward-outline"></ion-icon>
+      </div>
+
     </div>
 
-    <p class="description">
-      {{ incident.description }}
-    </p>
+    <p>{{ incident.description }}</p>
 
-    <div class="card-footer">
+    <div class="footer">
       <span class="time">
-         {{ getTimeAgo() }}
-      </span>
-
-      <span *ngIf="incident.assignedTo" class="assigned">
-        👤 {{ incident.assignedTo }}
+        <ion-icon name="time-outline"></ion-icon>
+        {{ getTimeAgo() }}
       </span>
     </div>
 
-  </ion-card-content>
+  </div>
+
 </ion-card>

@@ -1,21 +1,28 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { Router } from '@angular/router';
 import { Incident } from 'src/app/domain/models/incident.model';
-import { IonCard, IonCardHeader, IonCardTitle, IonBadge, IonCardContent } from "@ionic/angular/standalone";
+import {
+  IonCard,
+  IonCardHeader,
+  IonCardTitle,
+  IonBadge,
+  IonCardContent, IonIcon } from "@ionic/angular/standalone";
 
 @Component({
   selector: 'app-incident-card',
   templateUrl: './incident-card.component.html',
   styleUrls: ['./incident-card.component.scss'],
   standalone: true,
-  imports: [IonCardContent, IonBadge, IonCardTitle, 
+  imports: [IonIcon, 
+    IonCardContent,
+    IonBadge,
+    IonCardTitle,
     IonCard,
     IonCardHeader,
     CommonModule
   ]
 })
-
 export class IncidentCardComponent {
 
   @Input() incident!: Incident;
@@ -40,11 +47,7 @@ export class IncidentCardComponent {
     if (diff < 3600) return `Hace ${Math.floor(diff / 60)}m`;
     return `Hace ${Math.floor(diff / 3600)}h`;
   }
-
-
   openDetail() {
-    this.router.navigate(['/incident-detail'], {
-      queryParams: { id: this.incident.id }
-    });
+    this.router.navigate(['/incident-detail', this.incident.id]);
   }
 }

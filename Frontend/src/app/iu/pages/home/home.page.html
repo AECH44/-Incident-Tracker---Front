@@ -1,23 +1,20 @@
 <ion-header>
-  <ion-toolbar color="dark" class="custom-toolbar">
+  <ion-toolbar class="custom-toolbar">
 
-    
     <ion-buttons slot="start">
-      <ion-button (click)="openMenu()">
-        <ion-icon name="menu-outline"></ion-icon>
-      </ion-button>
+      <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-    <ion-title>Incident Tracker</ion-title>
 
-  
+    <ion-title class="center-title">Incident Tracker</ion-title>
+
     <ion-buttons slot="end">
       <ion-button (click)="openNotifications($event)">
-        <ion-icon name="notifications-outline"></ion-icon>
 
-       
-        <ion-badge color="danger" class="notif-badge">
-          1
+        <ion-icon name="notifications-outline" class="notif-icon"></ion-icon>
+
+        <ion-badge *ngIf="hasCriticalAlert" color="danger" class="notif-badge">
+          {{ criticalCount }}
         </ion-badge>
       </ion-button>
     </ion-buttons>
@@ -27,32 +24,39 @@
 
 <ion-content>
 
- 
   <div *ngIf="hasCriticalAlert" class="alert-banner">
-    ⚠️ Incidente crítico sin atender
+    <ion-icon name="time-outline"></ion-icon>
+    <span>1 incidente(s) crítico(s) sin atender</span>
+    <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
   </div>
 
-  <!-- LOADING -->
+
   <div *ngIf="loading" class="center">
     <ion-spinner></ion-spinner>
   </div>
 
-  <!-- ERROR -->
+
   <div *ngIf="error" class="center">
     <p>Error cargando incidentes</p>
   </div>
 
-  <!-- EMPTY -->
+
   <div *ngIf="!loading && incidents.length === 0" class="center">
     <p>No hay incidentes</p>
   </div>
 
-  <!-- LISTA -->
+
   <ion-list *ngIf="!loading && incidents.length > 0">
     <app-incident-card
       *ngFor="let incident of incidents"
       [incident]="incident">
     </app-incident-card>
   </ion-list>
+
+<ion-fab vertical="bottom" horizontal="end" slot="fixed">
+  <ion-fab-button class="custom-fab" (click)="goToCreateIncident()">
+    <ion-icon name="add-outline"></ion-icon>
+  </ion-fab-button>
+</ion-fab>
 
 </ion-content>

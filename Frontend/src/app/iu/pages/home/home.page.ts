@@ -3,7 +3,6 @@ import { IncidentService } from 'src/app/data/services/incident';
 import { CommonModule } from '@angular/common';
 import { Incident } from 'src/app/domain/models/incident.model';
 import { IncidentCardComponent } from '../../components/incident-card/incident-card.component';
-import { IonMenuButton } from '@ionic/angular/standalone';
 import {
   IonContent,
   IonHeader,
@@ -14,17 +13,21 @@ import {
   IonButtons,
   IonIcon,
   IonButton,
-  IonBadge
-} from '@ionic/angular/standalone';
-import { MenuController, PopoverController } from '@ionic/angular';
+  IonBadge,
+  IonMenuButton,
+  IonItem, IonFab, IonFabButton } from '@ionic/angular/standalone';
+import { PopoverController } from '@ionic/angular';
 import { NotificationsComponent } from 'src/app/iu/components/notifications/notifications.component';
+import { Router } from '@angular/router';
+
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [
+  imports: [IonFabButton, IonFab, 
+    IonItem,
     IonBadge,
     IonButton,
     IonIcon,
@@ -46,16 +49,15 @@ export class HomePage implements OnInit {
   loading = true;
   error = false;
 
-  
   hasCriticalAlert = false;
+  criticalCount = 0; 
+  bannerVisible = true; 
 
-  
   private popoverCtrl = inject(PopoverController);
 
-  constructor(
-    private incidentService: IncidentService,
-    private menuCtrl: MenuController
-  ) {}
+  private router = inject(Router);
+
+  constructor(private incidentService: IncidentService) {}
 
   ngOnInit() {
     this.loadIncidents();
@@ -67,9 +69,7 @@ export class HomePage implements OnInit {
     this.incidentService.getIncidents().subscribe({
       next: (data) => {
         this.incidents = data;
-
         this.checkCriticalIncidents();
-
         this.loading = false;
       },
       error: () => {
@@ -79,11 +79,10 @@ export class HomePage implements OnInit {
     });
   }
 
-  //  lógica alerta crítica
   checkCriticalIncidents() {
     const now = Date.now();
 
-    this.hasCriticalAlert = this.incidents.some(incident => {
+    const criticals = this.incidents.filter(incident => {
       const created = new Date(incident.createdAt).getTime();
       const diffSeconds = (now - created) / 1000;
 
@@ -93,14 +92,15 @@ export class HomePage implements OnInit {
         diffSeconds > 30
       );
     });
+
+    this.criticalCount = criticals.length;
+    this.hasCriticalAlert = this.criticalCount > 0;
   }
 
-  //  menú lateral
-  openMenu() {
-    this.menuCtrl.open();
+  closeBanner() {
+    this.bannerVisible = false;
   }
 
-  // abrir notificaciones
   async openNotifications(ev: any) {
     const popover = await this.popoverCtrl.create({
       component: NotificationsComponent,
@@ -114,4 +114,7 @@ export class HomePage implements OnInit {
     await popover.present();
   }
 
+  goToCreateIncident() {
+  this.router.navigate(['/create-incident']);
+}
 }

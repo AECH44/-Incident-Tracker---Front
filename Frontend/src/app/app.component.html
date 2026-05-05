@@ -1,18 +1,19 @@
 <ion-app>
+
   <ion-menu contentId="main-content">
 
-    <ion-header>
-      <ion-toolbar color="dark">
-        <ion-title>Menú</ion-title>
-      </ion-toolbar>
-    </ion-header>
+<ion-header>
+  <ion-toolbar class="menu-toolbar">
+    <ion-title>Menú</ion-title>
+  </ion-toolbar>
+</ion-header>
 
     <ion-content>
       <ion-list>
-        <ion-item routerLink="/home" routerDirection="root">Home</ion-item>
-        <ion-item>Mis incidentes</ion-item>
-        <ion-item>Historial</ion-item>
-        <ion-item>Perfil</ion-item>
+        <ion-item routerLink="/tabs/home" routerDirection="root">Home</ion-item>
+        <ion-item routerLink="/tabs/my-incidents">Mis incidentes</ion-item>
+        <ion-item routerLink="/tabs/history">Historial</ion-item>
+        <ion-item routerLink="/tabs/profile">Perfil</ion-item>
       </ion-list>
     </ion-content>
 
