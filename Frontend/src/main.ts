@@ -19,7 +19,9 @@ import {
   documentTextOutline,
   flagOutline,
   personOutline,
-  calendarOutline
+  calendarOutline,
+  arrowBack, 
+  add
 } from 'ionicons/icons';
 
 addIcons({
@@ -34,7 +36,9 @@ addIcons({
   'document-text-outline': documentTextOutline,
   'flag-outline': flagOutline,
   'person-outline': personOutline,
-  'calendar-outline': calendarOutline
+  'calendar-outline': calendarOutline,
+  'arrow-back': arrowBack,
+  'add': add
 });
 
 bootstrapApplication(AppComponent, {

@@ -3,6 +3,7 @@ import { IncidentService } from 'src/app/data/services/incident';
 import { CommonModule } from '@angular/common';
 import { Incident } from 'src/app/domain/models/incident.model';
 import { IncidentCardComponent } from '../../components/incident-card/incident-card.component';
+
 import {
   IonContent,
   IonHeader,
@@ -15,18 +16,23 @@ import {
   IonButton,
   IonBadge,
   IonMenuButton,
-  IonItem, IonFab, IonFabButton } from '@ionic/angular/standalone';
+  IonItem,
+  IonFab,
+  IonFabButton
+} from '@ionic/angular/standalone';
+
 import { PopoverController } from '@ionic/angular';
 import { NotificationsComponent } from 'src/app/iu/components/notifications/notifications.component';
 import { Router } from '@angular/router';
-
 
 @Component({
   selector: 'app-home',
   templateUrl: './home.page.html',
   styleUrls: ['./home.page.scss'],
   standalone: true,
-  imports: [IonFabButton, IonFab, 
+  imports: [
+    IonFabButton,
+    IonFab,
     IonItem,
     IonBadge,
     IonButton,
@@ -50,11 +56,10 @@ export class HomePage implements OnInit {
   error = false;
 
   hasCriticalAlert = false;
-  criticalCount = 0; 
-  bannerVisible = true; 
+  criticalCount = 0;
+  bannerVisible = true;
 
   private popoverCtrl = inject(PopoverController);
-
   private router = inject(Router);
 
   constructor(private incidentService: IncidentService) {}
@@ -63,12 +68,47 @@ export class HomePage implements OnInit {
     this.loadIncidents();
   }
 
+  ionViewWillEnter() {
+    this.loadIncidents();
+  }
+
   loadIncidents() {
     this.loading = true;
 
     this.incidentService.getIncidents().subscribe({
       next: (data) => {
-        this.incidents = data;
+
+        const localIncidents = JSON.parse(localStorage.getItem('incidents') || '[]');
+
+        const mappedLocal: Incident[] = localIncidents.map((i: any) => ({
+          id: i.id,
+          title: i.title,
+          description: i.description,
+          severity: i.severity || 'P3',
+          status: i.status || 'OPEN',
+          createdAt: i.createdAt || new Date().toISOString(),
+          updatedAt: i.updatedAt || new Date().toISOString(),
+          assignedTo: i.assignedTo || null
+        }));
+
+        const mappedApi: Incident[] = (data || []).map((i: any) => ({
+          id: i.id,
+          title: i.title,
+          description: i.description,
+          severity: i.severity || 'P3',
+          status: i.status || 'OPEN',
+          createdAt: i.createdAt || new Date().toISOString(),
+          updatedAt: i.updatedAt || new Date().toISOString(),
+          assignedTo: i.assignedTo || null
+        }));
+
+        const merged = [...mappedLocal, ...mappedApi];
+
+        this.incidents = merged.filter(
+          (incident, index, self) =>
+            index === self.findIndex(i => i.id === incident.id)
+        );
+
         this.checkCriticalIncidents();
         this.loading = false;
       },
@@ -80,16 +120,11 @@ export class HomePage implements OnInit {
   }
 
   checkCriticalIncidents() {
-    const now = Date.now();
 
     const criticals = this.incidents.filter(incident => {
-      const created = new Date(incident.createdAt).getTime();
-      const diffSeconds = (now - created) / 1000;
-
       return (
         incident.severity === 'P1' &&
-        incident.status === 'OPEN' &&
-        diffSeconds > 30
+        incident.status === 'OPEN'
       );
     });
 
@@ -102,12 +137,14 @@ export class HomePage implements OnInit {
   }
 
   async openNotifications(ev: any) {
+
     const popover = await this.popoverCtrl.create({
       component: NotificationsComponent,
       event: ev,
       translucent: true,
       componentProps: {
-        hasCritical: this.hasCriticalAlert
+        hasCritical: this.hasCriticalAlert,
+        criticalCount: this.criticalCount
       }
     });
 
@@ -115,6 +152,6 @@ export class HomePage implements OnInit {
   }
 
   goToCreateIncident() {
-  this.router.navigate(['/create-incident']);
-}
+    this.router.navigate(['/create-incident']);
+  }
 }

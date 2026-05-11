@@ -1,13 +1,67 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>create-incident</ion-title>
+<ion-header>
+  <ion-toolbar class="detail-toolbar">
+>
+    <ion-buttons slot="start">
+      <ion-button (click)="goBack()">
+        <ion-icon name="arrow-back"></ion-icon>
+      </ion-button>
+    </ion-buttons>
+    <ion-title class="title-center">Crear Incidente</ion-title>
   </ion-toolbar>
 </ion-header>
 
-<ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">create-incident</ion-title>
-    </ion-toolbar>
-  </ion-header>
+<ion-content class="ion-padding">
+
+  <form [formGroup]="incidentForm">
+
+    <ion-label>Título <span class="required">*</span></ion-label>
+    <ion-input
+      placeholder="Ej: Error en servicio de autenticación"
+      formControlName="title">
+    </ion-input>
+    <p class="helper-text">Título corto y descriptivo del incidente</p>
+
+    <ion-label>Descripción</ion-label>
+    <ion-textarea
+      placeholder="Describe qué está ocurriendo, impacto, pasos para reproducir, etc."
+      formControlName="description">
+    </ion-textarea>
+    <p class="helper-text">Información detallada del incidente</p>
+
+    <ion-label>Severidad <span class="required">*</span></ion-label>
+
+    <div class="severity-container">
+      <div
+        *ngFor="let s of severities"
+        class="severity-card"
+        [class.selected]="incidentForm.value.severity === s.value"
+        (click)="incidentForm.patchValue({ severity: s.value })"
+      >
+        <div class="radio"></div>
+        <div class="badge" [ngClass]="s.value">{{ s.value }}</div>
+        <h3>{{ s.title }}</h3>
+        <p>{{ s.description }}</p>
+      </div>
+    </div>
+
+    
+    <ion-label>Asignado a</ion-label>
+    <ion-select placeholder="Seleccionar responsable (opcional)" formControlName="assignedTo">
+      <ion-select-option *ngFor="let user of users" [value]="user">
+        {{ user }}
+      </ion-select-option>
+    </ion-select>
+
+    
+    <ion-button expand="block" class="create-btn" (click)="createIncident()">
+      <ion-icon name="add"></ion-icon>
+      Crear Incidente
+    </ion-button>
+
+    <p class="footer-text">
+      Se notificará al equipo automáticamente
+    </p>
+
+  </form>
+
 </ion-content>

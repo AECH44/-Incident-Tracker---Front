@@ -5,18 +5,30 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
 
-
-    <ion-title class="center-title">Incident Tracker</ion-title>
+    <ion-title class="center-title">
+      Incident Tracker
+    </ion-title>
 
     <ion-buttons slot="end">
+
       <ion-button (click)="openNotifications($event)">
 
-        <ion-icon name="notifications-outline" class="notif-icon"></ion-icon>
+        <ion-icon
+          name="notifications-outline"
+          class="notif-icon">
+        </ion-icon>
 
-        <ion-badge *ngIf="hasCriticalAlert" color="danger" class="notif-badge">
+        <ion-badge
+          *ngIf="hasCriticalAlert"
+          color="danger"
+          class="notif-badge">
+
           {{ criticalCount }}
+
         </ion-badge>
+
       </ion-button>
+
     </ion-buttons>
 
   </ion-toolbar>
@@ -25,38 +37,54 @@
 <ion-content>
 
   <div *ngIf="hasCriticalAlert" class="alert-banner">
-    <ion-icon name="time-outline"></ion-icon>
-    <span>1 incidente(s) crítico(s) sin atender</span>
-    <ion-icon name="chevron-forward-outline" class="arrow"></ion-icon>
-  </div>
 
+    <ion-icon name="time-outline"></ion-icon>
+
+    <span>
+      {{ criticalCount }} incidente(s) crítico(s) sin atender
+    </span>
+
+    <ion-icon
+      name="chevron-forward-outline"
+      class="arrow">
+    </ion-icon>
+
+  </div>
 
   <div *ngIf="loading" class="center">
     <ion-spinner></ion-spinner>
   </div>
 
-
   <div *ngIf="error" class="center">
     <p>Error cargando incidentes</p>
   </div>
-
 
   <div *ngIf="!loading && incidents.length === 0" class="center">
     <p>No hay incidentes</p>
   </div>
 
-
   <ion-list *ngIf="!loading && incidents.length > 0">
+
     <app-incident-card
       *ngFor="let incident of incidents"
       [incident]="incident">
     </app-incident-card>
+
   </ion-list>
 
-<ion-fab vertical="bottom" horizontal="end" slot="fixed">
-  <ion-fab-button class="custom-fab" (click)="goToCreateIncident()">
-    <ion-icon name="add-outline"></ion-icon>
-  </ion-fab-button>
-</ion-fab>
+  <ion-fab
+    vertical="bottom"
+    horizontal="end"
+    slot="fixed">
+
+    <ion-fab-button
+      class="custom-fab"
+      (click)="goToCreateIncident()">
+
+      <ion-icon name="add-outline"></ion-icon>
+
+    </ion-fab-button>
+
+  </ion-fab>
 
 </ion-content>

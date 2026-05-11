@@ -48,6 +48,11 @@ export class IncidentCardComponent {
     return `Hace ${Math.floor(diff / 3600)}h`;
   }
   openDetail() {
-    this.router.navigate(['/incident-detail', this.incident.id]);
+  if (!this.incident?.id) {
+    console.error('Incidente sin ID', this.incident);
+    return;
   }
+
+  this.router.navigate(['/incident-detail', this.incident.id]);
+}
 }

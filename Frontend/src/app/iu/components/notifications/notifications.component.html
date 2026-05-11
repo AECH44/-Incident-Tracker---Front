@@ -1,9 +1,15 @@
 <ion-list>
+
   <ion-item *ngIf="hasCritical">
-    Incidente crítico sin atender
+
+    {{ criticalCount }} incidente(s) crítico(s) sin atender
+
   </ion-item>
 
-  <ion-item>
-    Cambios recientes de estado
+  <ion-item *ngFor="let notification of notifications">
+
+    {{ notification.message }}
+
   </ion-item>
+
 </ion-list>
