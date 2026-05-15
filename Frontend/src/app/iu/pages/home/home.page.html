@@ -51,6 +51,24 @@
 
   </div>
 
+  <div
+    *ngIf="!loading && incidents.length > 0"
+    class="realtime-header">
+
+    <h3>Incidentes en tiempo real</h3>
+
+    <div class="live-indicator">
+
+      <span class="live-dot"></span>
+
+      <span class="live-text">
+        En vivo
+      </span>
+
+    </div>
+
+  </div>
+
   <div *ngIf="loading" class="center">
     <ion-spinner></ion-spinner>
   </div>

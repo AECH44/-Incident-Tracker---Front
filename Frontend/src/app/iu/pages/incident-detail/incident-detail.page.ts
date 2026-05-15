@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Incident } from 'src/app/domain/models/incident.model';
+import { Incident } from 'src/app/core/models/incident.model';
 import { IncidentService } from 'src/app/data/services/incident';
 
 import {

@@ -1,6 +1,6 @@
 import { Injectable } from '@angular/core';
 import { Observable, of } from 'rxjs';
-import { Incident } from '../../domain/models/incident.model';
+import { Incident } from '../../core/models/incident.model';
 import { MOCK_INCIDENTS } from '../mocks/incident.mock';
 
 @Injectable({

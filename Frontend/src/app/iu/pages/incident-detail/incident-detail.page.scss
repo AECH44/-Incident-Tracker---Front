@@ -1,4 +1,4 @@
-/* 🔝 HEADER */
+
 .detail-toolbar {
   --background: #2c284e;
   color: white;
@@ -9,6 +9,7 @@
   font-size: 15px;
   font-weight: 600;
 }
+
 
 .incident-header {
   padding: 14px 16px 8px;
@@ -33,11 +34,19 @@
   color: #777;
 }
 
+
 .detail-card {
   margin: 10px 12px;
+
   border-radius: 14px;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.06);
+
+  border: 1.5px solid #e4e4ef;
+
+  box-shadow:
+    0 4px 12px rgba(0,0,0,0.05),
+    0 0 0 1px rgba(255,255,255,0.4) inset;
 }
+
 
 ion-item {
   --padding-start: 10px;
@@ -69,12 +78,34 @@ ion-item span {
   text-align: right;
 }
 
+
 ion-badge {
   padding: 6px 10px;
   border-radius: 8px;
   font-size: 11px;
   font-weight: 700;
 }
+
+
+.severity-badge-top {
+  color: white !important;
+}
+
+.severity-badge-top.badge-p1 {
+  --background: #ef233c;
+  --color: white;
+}
+
+.severity-badge-top.badge-p2 {
+  --background: #f77f00;
+  --color: white;
+}
+
+.severity-badge-top.badge-p3 {
+  --background: #ffbe0b;
+  --color: white;
+}
+
 
 .badge-p1 {
   --background: #ffe3e3;
@@ -106,8 +137,10 @@ ion-badge {
   --color: #1f9d55;
 }
 
+
 .actions {
   padding: 10px 14px 16px;
+
   display: flex;
   flex-direction: column;
   gap: 10px;
@@ -130,11 +163,18 @@ ion-badge {
   display: flex;
   justify-content: space-between;
   align-items: center;
+
   border-radius: 14px;
+
   padding: 14px;
+
   color: white;
+
   cursor: pointer;
-  transition: transform 0.15s ease, box-shadow 0.15s ease;
+
+  transition:
+    transform 0.15s ease,
+    box-shadow 0.15s ease;
 }
 
 .action-btn:active {
@@ -159,17 +199,53 @@ ion-badge {
 
 .action-btn.acknowledge {
   background: linear-gradient(135deg, #3b82f6, #2563eb);
-  box-shadow: 0 5px 12px rgba(59, 130, 246, 0.3);
+
+  box-shadow:
+    0 5px 12px rgba(59, 130, 246, 0.3);
 }
 
 .action-btn.resolve {
   background: linear-gradient(135deg, #22c55e, #16a34a);
-  box-shadow: 0 5px 12px rgba(34, 197, 94, 0.3);
+
+  box-shadow:
+    0 5px 12px rgba(34, 197, 94, 0.3);
 }
 
 .action-btn.disabled {
   opacity: 0.5;
   pointer-events: none;
+}
+
+.action-content {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.action-icon {
+  width: 28px;
+  height: 28px;
+
+  border-radius: 50%;
+
+  background: white;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  font-weight: 900;
+  font-size: 14px;
+
+  flex-shrink: 0;
+}
+
+.resolve-circle {
+  color: #16a34a;
+}
+
+.ack-circle {
+  color: #2563eb;
 }
 
 ion-card-content {

@@ -9,67 +9,88 @@ ion-card {
   overflow: hidden;
   margin: 12px;
   box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+  background: white;
 }
 
-/* barra izquierda */
+
+
 .severity-bar {
-  width: 6px;
+  width: 5px;
 }
 
 .severity-bar.P1 {
-  background: #d00000;
+  background: #ef233c;
 }
 
 .severity-bar.P2 {
-  background: #f48c06;
+  background: #f77f00;
 }
 
 .severity-bar.P3 {
-  background: #ffba08;
+  background: #ffbe0b;
 }
+
 
 .card-content {
   padding: 14px;
   width: 100%;
 }
 
-/* HEADER */
+
+
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: center;
+  align-items: flex-start;
+  gap: 12px;
 }
 
 
-.left {
+
+.left-section {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: flex-start;
+  gap: 10px;
+  flex: 1;
 }
+
+.text-content {
+  flex: 1;
+}
+
 
 
 .severity-badge {
-  padding: 4px 10px;
+  min-width: 34px;
+  height: 24px;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
   border-radius: 8px;
-  font-weight: bold;
+
+  font-weight: 700;
   font-size: 12px;
+
+  color: white;
+
+  flex-shrink: 0;
 }
 
-
 .severity-badge.P1 {
-  background: #ffd6d6;
-  color: #d00000;
+  background: #ef233c;
 }
 
 .severity-badge.P2 {
-  background: #fff3cd;
-  color: #f48c06;
+  background: #f77f00;
 }
 
 .severity-badge.P3 {
-  background: #fff8cc;
-  color: #ffba08;
+  background: #ffbe0b;
 }
+
 
 
 .status-container {
@@ -81,48 +102,56 @@ ion-card {
 .status {
   padding: 4px 10px;
   border-radius: 10px;
-  font-size: 12px;
-  font-weight: bold;
+  font-size: 11px;
+  font-weight: 700;
+  white-space: nowrap;
 }
 
 .status.OPEN {
-  background: #ffd6d6;
-  color: #d00000;
+  background: #ffe5e5;
+  color: #d90429;
 }
 
 .status.ACKNOWLEDGED {
-  background: #fff3cd;
-  color: #f48c06;
+  background: #e5edff;
+  color: #4361ee;
 }
 
 .status.RESOLVED {
-  background: #e6ffed;
+  background: #e8ffef;
   color: #2b9348;
 }
+
 
 
 h2 {
   margin: 0;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
+  color: #1f1f1f;
 }
+
 
 
 p {
-  margin: 6px 0 0;
+  margin: 4px 0 0;
   color: #666;
-  font-size: 14px;
+  font-size: 13px;
+  line-height: 1.4;
 }
+
 
 
 .footer {
   margin-top: 10px;
-  font-size: 12px;
-  color: #888;
+  padding-left: 44px;
 }
 
 .time {
   display: flex;
   align-items: center;
   gap: 6px;
+
+  font-size: 12px;
+  color: #888;
 }

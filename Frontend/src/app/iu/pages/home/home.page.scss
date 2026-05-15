@@ -4,12 +4,13 @@
   right: 5px;
   font-size: 10px;
 }
+
 .alert-banner {
   display: flex;
   align-items: center;
   justify-content: space-between;
 
-  margin: 10px 16px 8px 16px; /* 🔥 más pegado a cards */
+  margin: 10px 16px 8px 16px;
   padding: 10px 14px;
 
   border-radius: 12px;
@@ -66,7 +67,7 @@ ion-toolbar ion-icon {
 }
 
 .custom-fab {
-  --background: #5a42cd; 
+  --background: #5a42cd;
   --background-activated: #5a189a;
   --box-shadow: 0 4px 12px rgba(0,0,0,0.3);
 
@@ -75,5 +76,40 @@ ion-toolbar ion-icon {
 }
 
 ion-fab {
-  margin-bottom: 70px; 
+  margin-bottom: 70px;
+}
+
+.realtime-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  padding: 4px 18px 0 18px;
+  margin-top: 6px;
+}
+
+.realtime-header h3 {
+  margin: 0;
+  font-size: 16px;
+  font-weight: 700;
+  color: #1f1f1f;
+}
+
+.live-indicator {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.live-dot {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: #16c15d;
+}
+
+.live-text {
+  font-size: 13px;
+  font-weight: 600;
+  color: #16c15d;
 }

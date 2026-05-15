@@ -1,4 +1,4 @@
-import { Incident } from '../../domain/models/incident.model';
+import { Incident } from '../../core/models/incident.model';
 
 export const MOCK_INCIDENTS: Incident[] = [
   {

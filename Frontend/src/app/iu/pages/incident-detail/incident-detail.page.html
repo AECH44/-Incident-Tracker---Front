@@ -1,7 +1,6 @@
 <ion-header>
   <ion-toolbar class="detail-toolbar">
 
-
     <ion-buttons slot="start">
       <ion-button (click)="goBack()">
         <ion-icon name="arrow-back-outline"></ion-icon>
@@ -12,7 +11,6 @@
       Detalle de Incidente
     </ion-title>
 
-    <!-- ⋮ -->
     <ion-buttons slot="end">
       <ion-button>
         <ion-icon name="ellipsis-vertical-outline"></ion-icon>
@@ -27,13 +25,19 @@
   <div class="incident-header">
 
     <div class="top-row">
-      <ion-badge [ngClass]="getSeverityClass()">
+
+      <ion-badge
+        class="severity-badge-top"
+        [ngClass]="getSeverityClass()">
+
         {{ incident.severity }}
+
       </ion-badge>
 
       <ion-badge [ngClass]="getStatusClass()">
         {{ incident.status }}
       </ion-badge>
+
     </div>
 
     <h2>{{ incident.title }}</h2>
@@ -45,92 +49,170 @@
   </div>
 
   <ion-card class="detail-card">
+
     <ion-card-content>
 
       <ion-item>
-        <ion-icon name="document-text-outline" slot="start"></ion-icon>
+
+        <ion-icon
+          name="document-text-outline"
+          slot="start">
+        </ion-icon>
+
         <ion-label>
+
           <strong>Descripción</strong>
+
           <p>{{ incident.description }}</p>
+
         </ion-label>
+
       </ion-item>
 
       <ion-item>
-        <ion-icon name="flag-outline" slot="start"></ion-icon>
+
+        <ion-icon
+          name="flag-outline"
+          slot="start">
+        </ion-icon>
+
         <ion-label>
           <strong>Severidad</strong>
         </ion-label>
+
         <ion-badge [ngClass]="getSeverityClass()">
           {{ incident.severity }}
         </ion-badge>
+
       </ion-item>
 
       <ion-item>
-        <ion-icon name="time-outline" slot="start"></ion-icon>
+
+        <ion-icon
+          name="time-outline"
+          slot="start">
+        </ion-icon>
+
         <ion-label>
           <strong>Estado</strong>
         </ion-label>
+
         <ion-badge [ngClass]="getStatusClass()">
           {{ incident.status }}
         </ion-badge>
+
       </ion-item>
 
       <ion-item>
-        <ion-icon name="person-outline" slot="start"></ion-icon>
+
+        <ion-icon
+          name="person-outline"
+          slot="start">
+        </ion-icon>
+
         <ion-label>
           <strong>Asignado a</strong>
         </ion-label>
-        <span>{{ incident.assignedTo || 'Sin asignar' }}</span>
+
+        <span>
+          {{ incident.assignedTo || 'Sin asignar' }}
+        </span>
+
       </ion-item>
 
       <ion-item>
-        <ion-icon name="calendar-outline" slot="start"></ion-icon>
+
+        <ion-icon
+          name="calendar-outline"
+          slot="start">
+        </ion-icon>
+
         <ion-label>
           <strong>Creado</strong>
         </ion-label>
+
         <span>{{ incident.createdAt }}</span>
+
       </ion-item>
 
       <ion-item>
-        <ion-icon name="time-outline" slot="start"></ion-icon>
+
+        <ion-icon
+          name="time-outline"
+          slot="start">
+        </ion-icon>
+
         <ion-label>
           <strong>Última actualización</strong>
         </ion-label>
+
         <span>{{ incident.updatedAt }}</span>
+
       </ion-item>
 
     </ion-card-content>
+
   </ion-card>
 
   <div class="actions">
 
     <h3>Acciones disponibles</h3>
-    <p class="hint">Las acciones varían según el estado actual</p>
 
-    <div 
+    <p class="hint">
+      Las acciones varían según el estado actual
+    </p>
+
+
+    <div
       class="action-btn acknowledge"
       (click)="acknowledge()"
       [class.disabled]="!canAcknowledge()">
 
-      <div>
-        <h4>Acknowledge</h4>
-        <p>Confirmar que estamos atendiendo este incidente</p>
+      <div class="action-content">
+
+        <div class="action-icon ack-circle">
+          !
+        </div>
+
+        <div>
+
+          <h4>Acknowledge</h4>
+
+          <p>
+            Confirmar que estamos atendiendo este incidente
+          </p>
+
+        </div>
+
       </div>
 
       <ion-icon name="chevron-forward-outline"></ion-icon>
+
     </div>
 
-    <div 
+    <div
       class="action-btn resolve"
       (click)="resolve()"
       [class.disabled]="!canResolve()">
 
-      <div>
-        <h4>Resolve</h4>
-        <p>Marcar como resuelto</p>
+      <div class="action-content">
+
+        <div class="action-icon resolve-circle">
+          ✓
+        </div>
+
+        <div>
+
+          <h4>Resolve</h4>
+
+          <p>Marcar como resuelto</p>
+
+        </div>
+
       </div>
 
       <ion-icon name="chevron-forward-outline"></ion-icon>
+
     </div>
 
   </div>
