@@ -1,19 +1,21 @@
 ion-card {
-  border-radius: 12px;
+  border-radius: 10px;
   margin: 10px;
 }
 
 .incident-card {
   display: flex;
-  border-radius: 16px;
+
+  border-radius: 10px;
+
   overflow: hidden;
+
   margin: 12px;
-  box-shadow: 0 4px 12px rgba(0,0,0,0.08);
+
+  box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 
   background: white;
 }
-
-
 
 .severity-bar {
   width: 5px;
@@ -31,13 +33,10 @@ ion-card {
   background: #ffbe0b;
 }
 
-
 .card-content {
   padding: 14px;
   width: 100%;
 }
-
-
 
 .header {
   display: flex;
@@ -45,8 +44,6 @@ ion-card {
   align-items: flex-start;
   gap: 12px;
 }
-
-
 
 .left-section {
   display: flex;
@@ -59,8 +56,6 @@ ion-card {
   flex: 1;
 }
 
-
-
 .severity-badge {
   min-width: 34px;
   height: 24px;
@@ -69,7 +64,7 @@ ion-card {
   align-items: center;
   justify-content: center;
 
-  border-radius: 8px;
+  border-radius: 6px;
 
   font-weight: 700;
   font-size: 12px;
@@ -91,8 +86,6 @@ ion-card {
   background: #ffbe0b;
 }
 
-
-
 .status-container {
   display: flex;
   align-items: center;
@@ -101,46 +94,52 @@ ion-card {
 
 .status {
   padding: 4px 10px;
-  border-radius: 10px;
-  font-size: 11px;
+
+  border-radius: 6px;
+
+  border: 1px solid transparent;
+
+  font-size: 10px;
   font-weight: 700;
+
   white-space: nowrap;
 }
 
 .status.OPEN {
-  background: #ffe5e5;
+  background: #fff1f1;
   color: #d90429;
+  border-color: #f7c4cb;
 }
 
 .status.ACKNOWLEDGED {
-  background: #e5edff;
+  background: #eef2ff;
   color: #4361ee;
+  border-color: #cfd8ff;
 }
 
 .status.RESOLVED {
-  background: #e8ffef;
+  background: #ecfff2;
   color: #2b9348;
+  border-color: #c8efd4;
 }
-
-
 
 h2 {
   margin: 0;
+
   font-size: 15px;
   font-weight: 700;
+
   color: #1f1f1f;
 }
 
-
-
 p {
   margin: 4px 0 0;
+
   color: #666;
+
   font-size: 13px;
   line-height: 1.4;
 }
-
-
 
 .footer {
   margin-top: 10px;

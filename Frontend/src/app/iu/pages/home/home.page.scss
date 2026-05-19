@@ -1,8 +1,23 @@
 .notif-badge {
   position: absolute;
-  top: 5px;
-  right: 5px;
-  font-size: 10px;
+  top: 2px;
+  right: 2px;
+
+  font-size: 12px;
+  font-weight: 700;
+
+  color: #ff2d55;
+
+  background: transparent !important;
+
+  --background: transparent !important;
+
+  box-shadow: none;
+
+  min-width: auto;
+  height: auto;
+
+  padding: 0;
 }
 
 .alert-banner {
@@ -13,13 +28,19 @@
   margin: 10px 16px 8px 16px;
   padding: 10px 14px;
 
-  border-radius: 12px;
-  background: rgba(255, 0, 0, 0.1);
+  border-radius: 10px;
+
+  border: 1px solid #f3b1b1;
+
+  background: rgba(255, 0, 0, 0.08);
+
   color: #d32f2f;
-  font-size: 14px;
+
+  font-size: 12px;
+  font-weight: 700;
 
   ion-icon {
-    font-size: 18px;
+    font-size: 16px;
   }
 
   span {
@@ -28,7 +49,7 @@
   }
 
   .arrow {
-    font-size: 18px;
+    font-size: 16px;
     opacity: 0.7;
   }
 }
@@ -46,24 +67,17 @@ ion-toolbar ion-icon {
   color: white !important;
 }
 
-.notif-badge {
-  position: absolute;
-  top: 4px;
-  right: 4px;
-  font-size: 10px;
-}
-
 .center-title {
   position: absolute;
   left: 50%;
   transform: translateX(-50%);
   text-align: center;
   width: max-content;
-  font-weight: 600;
+  font-weight: 700;
 }
 
 .notif-icon {
-  font-size: 24px;
+  font-size: 22px;
 }
 
 .custom-fab {
@@ -90,8 +104,10 @@ ion-fab {
 
 .realtime-header h3 {
   margin: 0;
+
   font-size: 16px;
   font-weight: 700;
+
   color: #1f1f1f;
 }
 
@@ -104,7 +120,9 @@ ion-fab {
 .live-dot {
   width: 8px;
   height: 8px;
+
   border-radius: 50%;
+
   background: #16c15d;
 }
 

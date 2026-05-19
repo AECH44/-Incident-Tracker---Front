@@ -113,8 +113,9 @@ export class IncidentDetailPage implements OnInit {
     if (this.incident.status === 'OPEN') {
 
       this.incident.status = 'ACKNOWLEDGED';
-      this.incident.severity = 'P2';
-      this.incident.updatedAt = new Date().toISOString();
+
+      this.incident.updatedAt =
+        new Date().toISOString();
 
       this.saveLocalIncident();
     }
@@ -122,22 +123,26 @@ export class IncidentDetailPage implements OnInit {
 
   resolve() {
 
-    if (this.incident.status !== 'RESOLVED') {
+    
+    if (this.incident.status === 'ACKNOWLEDGED') {
 
       this.incident.status = 'RESOLVED';
-      this.incident.severity = 'P3';
-      this.incident.updatedAt = new Date().toISOString();
+
+      this.incident.updatedAt =
+        new Date().toISOString();
 
       this.saveLocalIncident();
     }
   }
 
   canAcknowledge(): boolean {
+
     return this.incident.status === 'OPEN';
   }
 
   canResolve(): boolean {
-    return this.incident.status !== 'RESOLVED';
+
+    return this.incident.status === 'ACKNOWLEDGED';
   }
 
   getSeverityClass() {
@@ -173,6 +178,24 @@ export class IncidentDetailPage implements OnInit {
 
       default:
         return '';
+    }
+  }
+
+  getSeverityLabel(): string {
+
+    switch (this.incident.severity) {
+
+      case 'P1':
+        return 'P1 - Crítica';
+
+      case 'P2':
+        return 'P2 - Alta';
+
+      case 'P3':
+        return 'P3 - Media';
+
+      default:
+        return this.incident.severity;
     }
   }
 }

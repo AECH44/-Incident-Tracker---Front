@@ -34,8 +34,12 @@
 
       </ion-badge>
 
-      <ion-badge [ngClass]="getStatusClass()">
+      <ion-badge
+        class="status-badge"
+        [ngClass]="getStatusClass()">
+
         {{ incident.status }}
+
       </ion-badge>
 
     </div>
@@ -80,8 +84,12 @@
           <strong>Severidad</strong>
         </ion-label>
 
-        <ion-badge [ngClass]="getSeverityClass()">
-          {{ incident.severity }}
+        <ion-badge
+          class="status-badge"
+          [ngClass]="getSeverityClass()">
+
+          {{ getSeverityLabel() }}
+
         </ion-badge>
 
       </ion-item>
@@ -97,8 +105,12 @@
           <strong>Estado</strong>
         </ion-label>
 
-        <ion-badge [ngClass]="getStatusClass()">
+        <ion-badge
+          class="status-badge"
+          [ngClass]="getStatusClass()">
+
           {{ incident.status }}
+
         </ion-badge>
 
       </ion-item>
@@ -161,7 +173,6 @@
     <p class="hint">
       Las acciones varían según el estado actual
     </p>
-
 
     <div
       class="action-btn acknowledge"

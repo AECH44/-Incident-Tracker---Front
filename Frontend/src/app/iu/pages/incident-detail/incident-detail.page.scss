@@ -1,4 +1,3 @@
-
 .detail-toolbar {
   --background: #2c284e;
   color: white;
@@ -7,9 +6,8 @@
 .title-center {
   text-align: center;
   font-size: 15px;
-  font-weight: 600;
+  font-weight: 700;
 }
-
 
 .incident-header {
   padding: 14px 16px 8px;
@@ -22,7 +20,7 @@
 }
 
 .incident-header h2 {
-  margin: 8px 0 4px;
+  margin: 10px 0 4px;
   font-size: 19px;
   font-weight: 700;
   color: #1e1e2f;
@@ -33,7 +31,6 @@
   font-size: 11px;
   color: #777;
 }
-
 
 .detail-card {
   margin: 10px 12px;
@@ -46,7 +43,6 @@
     0 4px 12px rgba(0,0,0,0.05),
     0 0 0 1px rgba(255,255,255,0.4) inset;
 }
-
 
 ion-item {
   --padding-start: 10px;
@@ -78,17 +74,18 @@ ion-item span {
   text-align: right;
 }
 
-
 ion-badge {
-  padding: 6px 10px;
-  border-radius: 8px;
   font-size: 11px;
   font-weight: 700;
 }
 
-
+/* BADGE P1/P2/P3 SUPERIOR */
 .severity-badge-top {
+  padding: 8px 14px;
+  border-radius: 10px;
   color: white !important;
+  font-weight: 800;
+  letter-spacing: 0.3px;
 }
 
 .severity-badge-top.badge-p1 {
@@ -106,37 +103,51 @@ ion-badge {
   --color: white;
 }
 
+/* BADGES ESTADO Y DETALLE */
+.status-badge {
+  padding: 6px 10px;
+  border-radius: 8px;
+  border: 1px solid transparent;
+  font-weight: 700;
+}
 
-.badge-p1 {
+/* SEVERIDAD DENTRO DEL CARD */
+.status-badge.badge-p1 {
   --background: #ffe3e3;
   --color: #e00000;
+  border-color: #ffb5b5;
 }
 
-.badge-p2 {
+.status-badge.badge-p2 {
   --background: #fff0d9;
   --color: #f08a00;
+  border-color: #ffd08a;
 }
 
-.badge-p3 {
+.status-badge.badge-p3 {
   --background: #fff7cc;
   --color: #c89b00;
+  border-color: #ffe27a;
 }
 
-.badge-open {
+/* ESTADOS */
+.status-badge.badge-open {
   --background: #ffe3e3;
   --color: #d40000;
+  border-color: #ffb3b3;
 }
 
-.badge-ack {
-  --background: #fff0d9;
-  --color: #f08a00;
+.status-badge.badge-ack {
+  --background: #eef3ff;
+  --color: #3366ff;
+  border-color: #b8c9ff;
 }
 
-.badge-resolved {
+.status-badge.badge-resolved {
   --background: #dff8e8;
   --color: #1f9d55;
+  border-color: #9be2b5;
 }
-
 
 .actions {
   padding: 10px 14px 16px;
@@ -212,7 +223,7 @@ ion-badge {
 }
 
 .action-btn.disabled {
-  opacity: 0.5;
+  opacity: 0.45;
   pointer-events: none;
 }
 

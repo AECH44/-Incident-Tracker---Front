@@ -8,7 +8,8 @@ import {
   IonTitle,
   IonContent,
   IonList,
-  IonItem
+  IonItem,
+  IonSplitPane
 } from '@ionic/angular/standalone';
 import { RouterLink } from '@angular/router';
 
@@ -27,7 +28,8 @@ import { RouterLink } from '@angular/router';
     IonContent,
     IonList,
     IonItem,
-    RouterLink
+    RouterLink,
+    IonSplitPane
   ]
 })
 export class AppComponent {

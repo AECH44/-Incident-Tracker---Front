@@ -1,24 +1,47 @@
 <ion-app>
 
-  <ion-menu contentId="main-content">
+  <ion-split-pane contentId="main-content">
 
-<ion-header>
-  <ion-toolbar class="menu-toolbar">
-    <ion-title>Menú</ion-title>
-  </ion-toolbar>
-</ion-header>
+    <ion-menu contentId="main-content" type="overlay">
 
-    <ion-content>
-      <ion-list>
-        <ion-item routerLink="/tabs/home" routerDirection="root">Home</ion-item>
-        <ion-item routerLink="/tabs/my-incidents">Mis incidentes</ion-item>
-        <ion-item routerLink="/tabs/history">Historial</ion-item>
-        <ion-item routerLink="/tabs/profile">Perfil</ion-item>
-      </ion-list>
-    </ion-content>
+      <ion-header>
+        <ion-toolbar class="menu-toolbar">
+          <ion-title>Menú</ion-title>
+        </ion-toolbar>
+      </ion-header>
 
-  </ion-menu>
+      <ion-content>
 
-  <ion-router-outlet id="main-content"></ion-router-outlet>
+        <ion-list>
+
+          <ion-item
+            routerLink="/tabs/home"
+            routerDirection="root">
+
+            Home
+
+          </ion-item>
+
+          <ion-item routerLink="/tabs/my-incidents">
+            Mis incidentes
+          </ion-item>
+
+          <ion-item routerLink="/tabs/history">
+            Historial
+          </ion-item>
+
+          <ion-item routerLink="/tabs/profile">
+            Perfil
+          </ion-item>
+
+        </ion-list>
+
+      </ion-content>
+
+    </ion-menu>
+
+    <ion-router-outlet id="main-content"></ion-router-outlet>
+
+  </ion-split-pane>
 
 </ion-app>
