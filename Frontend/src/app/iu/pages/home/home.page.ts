@@ -7,10 +7,15 @@ import { Subscription } from 'rxjs';
 
 import { Incident } from 'src/app/core/models/incident.model';
 
+import { Severity } from 'src/app/core/enums/severity.enum';
+import { Status } from 'src/app/core/enums/status.enum';
+
 import { IncidentCardComponent } from '../../components/incident-card/incident-card.component';
 
 import { GetIncidentsUseCase } from 'src/app/domain/use-cases/get-incidents.usecase';
 import { ListenIncidentsUseCase } from 'src/app/domain/use-cases/listen-incidents.usecase';
+
+import { StorageService } from 'src/app/data/services/storage.service';
 
 import {
   IonContent,
@@ -69,6 +74,9 @@ export class HomePage implements OnInit, OnDestroy {
 
   bannerVisible = true;
 
+  readonly Severity = Severity;
+  readonly Status = Status;
+
   private popoverCtrl = inject(PopoverController);
   private router = inject(Router);
 
@@ -77,7 +85,8 @@ export class HomePage implements OnInit, OnDestroy {
 
   constructor(
     private getIncidentsUseCase: GetIncidentsUseCase,
-    private listenIncidentsUseCase: ListenIncidentsUseCase
+    private listenIncidentsUseCase: ListenIncidentsUseCase,
+    private storageService: StorageService
   ) {}
 
   ngOnInit() {
@@ -88,6 +97,7 @@ export class HomePage implements OnInit, OnDestroy {
   }
 
   ionViewWillEnter() {
+
     this.loadIncidents();
   }
 
@@ -98,129 +108,92 @@ export class HomePage implements OnInit, OnDestroy {
     this.sseSubscription?.unsubscribe();
   }
 
-  loadIncidents() {
+loadIncidents() {
 
-    this.loading = true;
+  this.loading = true;
 
-    this.incidentsSubscription = this.getIncidentsUseCase.execute().subscribe({
-
-      next: (data) => {
-
-        const localIncidents = JSON.parse(
-          localStorage.getItem('incidents') || '[]'
-        );
-
-        const mappedLocal: Incident[] = localIncidents.map((i: any) => ({
-
-          id: i.id,
-
-          title: i.title,
-
-          description: i.description,
-
-          severity: i.severity || 'P3',
-
-          status: i.status || 'OPEN',
-
-          createdAt: i.createdAt || new Date().toISOString(),
-
-          updatedAt: i.updatedAt || new Date().toISOString(),
-
-          assignedTo: i.assignedTo || null
-
-        }));
-
-        // incidentes de la api o los mocks
-        const mappedApi: Incident[] = (data || []).map((i: any) => ({
-
-          id: i.id,
-
-          title: i.title,
-
-          description: i.description,
-
-          severity: i.severity || 'P3',
-
-          status: i.status || 'OPEN',
-
-          createdAt: i.createdAt || new Date().toISOString(),
-
-          updatedAt: i.updatedAt || new Date().toISOString(),
-
-          assignedTo: i.assignedTo || null
-
-        }));
-
-        const merged = [...mappedLocal, ...mappedApi];
-
-        this.incidents = merged.filter(
-
-          (incident, index, self) =>
-
-            index === self.findIndex(i => i.id === incident.id)
-
-        );
-
-        this.checkCriticalIncidents();
-
-        this.loading = false;
-      },
-
-      error: (err) => {
-
-        console.error('Error loading incidents', err);
-
-        this.error = true;
-
-        this.loading = false;
-      }
-    });
-  }
-
-  listenRealtimeIncidents() {
-
-    this.sseSubscription = this.listenIncidentsUseCase
+  this.incidentsSubscription =
+    this.getIncidentsUseCase
       .execute()
       .subscribe({
 
-        next: (incident: Incident) => {
+        next: (incidents) => {
 
-          console.log('📡 SSE Incident received:', incident);
+          this.incidents = incidents;
 
-          const exists = this.incidents.some(
-            i => i.id === incident.id
-          );
+          this.checkCriticalIncidents();
 
-          if (!exists) {
-
-            this.incidents.unshift(incident);
-
-            this.checkCriticalIncidents();
-          }
+          this.loading = false;
         },
 
         error: (err) => {
 
-          console.error('SSE connection error', err);
+          console.error(
+            'Error loading incidents',
+            err
+          );
+
+          this.error = true;
+
+          this.loading = false;
         }
       });
+}
+
+  listenRealtimeIncidents() {
+
+    this.sseSubscription =
+      this.listenIncidentsUseCase
+        .execute()
+        .subscribe({
+
+          next: (incident: Incident) => {
+
+            console.log(
+              '📡 SSE Incident received:',
+              incident
+            );
+
+            const exists =
+              this.incidents.some(
+                i => i.id === incident.id
+              );
+
+            if (!exists) {
+
+              this.incidents.unshift(incident);
+
+              this.checkCriticalIncidents();
+            }
+          },
+
+          error: (err) => {
+
+            console.error(
+              'SSE connection error',
+              err
+            );
+          }
+        });
   }
 
   checkCriticalIncidents() {
 
-    const criticals = this.incidents.filter(incident => {
+    const criticals =
+      this.incidents.filter(incident => {
 
-      return (
+        return (
 
-        incident.severity === 'P1' &&
+          incident.severity === Severity.P1 &&
 
-        incident.status === 'OPEN'
-      );
-    });
+          incident.status === Status.OPEN
+        );
+      });
 
     this.criticalCount = criticals.length;
 
-    this.hasCriticalAlert = this.criticalCount > 0;
+    this.hasCriticalAlert =
+      this.criticalCount > 0;
   }
 
   closeBanner() {
@@ -230,27 +203,40 @@ export class HomePage implements OnInit, OnDestroy {
 
   async openNotifications(ev: any) {
 
-    const popover = await this.popoverCtrl.create({
+    const popover =
+      await this.popoverCtrl.create({
 
-      component: NotificationsComponent,
+        component: NotificationsComponent,
 
-      event: ev,
+        event: ev,
 
-      translucent: true,
+        translucent: true,
 
-      componentProps: {
+        componentProps: {
 
-        hasCritical: this.hasCriticalAlert,
+          hasCritical:
+            this.hasCriticalAlert,
 
-        criticalCount: this.criticalCount
-      }
-    });
+          criticalCount:
+            this.criticalCount
+        }
+      });
 
     await popover.present();
   }
 
   goToCreateIncident() {
 
-    this.router.navigate(['/create-incident']);
+    this.router.navigate([
+      '/create-incident'
+    ]);
   }
+
+  trackByIncidentId(
+  index: number,
+  incident: Incident
+): string {
+
+  return incident.id;
+}
 }

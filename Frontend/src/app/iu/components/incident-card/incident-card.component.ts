@@ -10,6 +10,8 @@ import { Router } from '@angular/router';
 
 import { Incident } from 'src/app/core/models/incident.model';
 
+import { Severity } from 'src/app/core/enums/severity.enum';
+
 import {
   IonCard,
   IonCardHeader,
@@ -40,6 +42,8 @@ export class IncidentCardComponent
   @Input() incident!: Incident;
 
   timeAgo = '';
+
+  readonly Severity = Severity;
 
   private intervalId: any;
 
@@ -73,13 +77,13 @@ export class IncidentCardComponent
 
     switch (this.incident.severity) {
 
-      case 'P1':
+      case Severity.P1:
         return 'danger';
 
-      case 'P2':
+      case Severity.P2:
         return 'warning';
 
-      case 'P3':
+      case Severity.P3:
         return 'medium';
 
       default:

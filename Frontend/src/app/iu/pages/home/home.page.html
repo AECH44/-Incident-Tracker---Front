@@ -83,10 +83,13 @@
 
   <ion-list *ngIf="!loading && incidents.length > 0">
 
-    <app-incident-card
-      *ngFor="let incident of incidents"
-      [incident]="incident">
-    </app-incident-card>
+        <app-incident-card
+          *ngFor="
+          let incident of incidents;
+          trackBy: trackByIncidentId
+          "
+         [incident]="incident">
+        </app-incident-card>
 
   </ion-list>
 

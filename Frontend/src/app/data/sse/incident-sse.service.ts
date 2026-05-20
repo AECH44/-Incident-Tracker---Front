@@ -1,7 +1,13 @@
-import { Injectable, NgZone } from '@angular/core';
+import {
+  Injectable,
+  NgZone
+} from '@angular/core';
+
 import { Observable } from 'rxjs';
 
 import { Incident } from '../../core/models/incident.model';
+
+import { environment } from 'src/environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -17,17 +23,13 @@ export class IncidentSseService {
     return new Observable(observer => {
 
       /*
-
-      codigo comentado temporalmente hasta que se tenga el
-      endpoint:
-      http://localhost:8080/incidents/stream
-
-      Descomentar para habilitar el codigo.
+      Código comentado temporalmente hasta
+      habilitar el endpoint SSE real.
       */
 
       /*
       const eventSource = new EventSource(
-        'http://localhost:8080/incidents/stream'
+        environment.sseUrl
       );
 
       eventSource.onmessage = (event) => {
@@ -38,9 +40,7 @@ export class IncidentSseService {
             JSON.parse(event.data);
 
           observer.next(incident);
-
         });
-
       };
 
       eventSource.onerror = (error) => {
@@ -60,9 +60,6 @@ export class IncidentSseService {
       console.log(
         'SSE deshabilitado temporalmente (modo mock)'
       );
-
     });
-
   }
-
 }

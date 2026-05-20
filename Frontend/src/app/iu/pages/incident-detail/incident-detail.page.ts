@@ -1,8 +1,17 @@
 import { Component, OnInit } from '@angular/core';
+
 import { ActivatedRoute } from '@angular/router';
-import { CommonModule } from '@angular/common';
+
+import { CommonModule, Location } from '@angular/common';
+
 import { Incident } from 'src/app/core/models/incident.model';
-import { IncidentService } from 'src/app/data/services/incident';
+
+import { Severity } from 'src/app/core/enums/severity.enum';
+import { Status } from 'src/app/core/enums/status.enum';
+
+import { StorageService } from 'src/app/data/services/storage.service';
+
+import { GetIncidentsUseCase } from 'src/app/domain/use-cases/get-incidents.usecase';
 
 import {
   IonContent,
@@ -40,18 +49,25 @@ import {
     IonBadge
   ]
 })
-export class IncidentDetailPage implements OnInit {
+export class IncidentDetailPage
+  implements OnInit {
 
   incident!: Incident;
 
+  readonly Severity = Severity;
+  readonly Status = Status;
+
   constructor(
     private route: ActivatedRoute,
-    private incidentService: IncidentService
+    private storageService: StorageService,
+    private getIncidentsUseCase: GetIncidentsUseCase,
+    private location: Location
   ) {}
 
   ngOnInit() {
 
-    const id = this.route.snapshot.paramMap.get('id');
+    const id =
+      this.route.snapshot.paramMap.get('id');
 
     if (id) {
       this.loadIncident(id);
@@ -60,59 +76,50 @@ export class IncidentDetailPage implements OnInit {
 
   loadIncident(id: string) {
 
-    const localIncidents = JSON.parse(
-      localStorage.getItem('incidents') || '[]'
-    );
-
-    const localIncident = localIncidents.find(
-      (i: any) => i.id === id
-    );
+    const localIncident =
+      this.storageService
+        .getIncidentById(id);
 
     if (localIncident) {
+
       this.incident = localIncident;
+
       return;
     }
 
-    this.incidentService.getIncidents().subscribe(data => {
+    this.getIncidentsUseCase
+      .execute()
+      .subscribe(data => {
 
-      const found = data.find(i => i.id === id);
+        const found =
+          data.find(i => i.id === id);
 
-      if (found) {
-        this.incident = found;
-      }
-    });
+        if (found) {
+          this.incident = found;
+        }
+      });
   }
 
   goBack() {
-    window.history.back();
+
+    this.location.back();
   }
 
   saveLocalIncident() {
 
-    const incidents = JSON.parse(
-      localStorage.getItem('incidents') || '[]'
-    );
-
-    const updated = incidents.map((i: any) => {
-
-      if (i.id === this.incident.id) {
-        return this.incident;
-      }
-
-      return i;
-    });
-
-    localStorage.setItem(
-      'incidents',
-      JSON.stringify(updated)
-    );
+    this.storageService
+      .updateIncident(this.incident);
   }
 
   acknowledge() {
 
-    if (this.incident.status === 'OPEN') {
+    if (
+      this.incident.status ===
+      Status.OPEN
+    ) {
 
-      this.incident.status = 'ACKNOWLEDGED';
+      this.incident.status =
+        Status.ACKNOWLEDGED;
 
       this.incident.updatedAt =
         new Date().toISOString();
@@ -123,10 +130,13 @@ export class IncidentDetailPage implements OnInit {
 
   resolve() {
 
-    
-    if (this.incident.status === 'ACKNOWLEDGED') {
+    if (
+      this.incident.status ===
+      Status.ACKNOWLEDGED
+    ) {
 
-      this.incident.status = 'RESOLVED';
+      this.incident.status =
+        Status.RESOLVED;
 
       this.incident.updatedAt =
         new Date().toISOString();
@@ -137,25 +147,27 @@ export class IncidentDetailPage implements OnInit {
 
   canAcknowledge(): boolean {
 
-    return this.incident.status === 'OPEN';
+    return this.incident.status ===
+      Status.OPEN;
   }
 
   canResolve(): boolean {
 
-    return this.incident.status === 'ACKNOWLEDGED';
+    return this.incident.status ===
+      Status.ACKNOWLEDGED;
   }
 
   getSeverityClass() {
 
     switch (this.incident.severity) {
 
-      case 'P1':
+      case Severity.P1:
         return 'badge-p1';
 
-      case 'P2':
+      case Severity.P2:
         return 'badge-p2';
 
-      case 'P3':
+      case Severity.P3:
         return 'badge-p3';
 
       default:
@@ -167,13 +179,13 @@ export class IncidentDetailPage implements OnInit {
 
     switch (this.incident.status) {
 
-      case 'OPEN':
+      case Status.OPEN:
         return 'badge-open';
 
-      case 'ACKNOWLEDGED':
+      case Status.ACKNOWLEDGED:
         return 'badge-ack';
 
-      case 'RESOLVED':
+      case Status.RESOLVED:
         return 'badge-resolved';
 
       default:
@@ -185,13 +197,13 @@ export class IncidentDetailPage implements OnInit {
 
     switch (this.incident.severity) {
 
-      case 'P1':
+      case Severity.P1:
         return 'P1 - Crítica';
 
-      case 'P2':
+      case Severity.P2:
         return 'P2 - Alta';
 
-      case 'P3':
+      case Severity.P3:
         return 'P3 - Media';
 
       default:

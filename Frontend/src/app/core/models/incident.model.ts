@@ -1,11 +1,22 @@
-export interface Incident {
-  id: string;
-  title: string;
-  description: string;
-  severity: 'P1' | 'P2' | 'P3';
-  status: 'OPEN' | 'ACKNOWLEDGED' | 'RESOLVED';
-  assignedTo?: string | null;
-  createdAt: string;
-  updatedAt: string;
-}
+import { Severity } from '../enums/severity.enum';
+import { Status } from '../enums/status.enum';
 
+export interface Incident {
+
+  id: string;
+
+  title: string;
+
+  description: string;
+
+  severity: Severity;
+
+  status: Status;
+
+  assignedTo?: string | null;
+
+  createdAt: string;
+
+  updatedAt: string;
+
+}

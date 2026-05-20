@@ -79,7 +79,7 @@ ion-badge {
   font-weight: 700;
 }
 
-/* BADGE P1/P2/P3 SUPERIOR */
+
 .severity-badge-top {
   padding: 8px 14px;
   border-radius: 10px;
@@ -103,7 +103,7 @@ ion-badge {
   --color: white;
 }
 
-/* BADGES ESTADO Y DETALLE */
+
 .status-badge {
   padding: 6px 10px;
   border-radius: 8px;
@@ -111,7 +111,6 @@ ion-badge {
   font-weight: 700;
 }
 
-/* SEVERIDAD DENTRO DEL CARD */
 .status-badge.badge-p1 {
   --background: #ffe3e3;
   --color: #e00000;
@@ -130,7 +129,7 @@ ion-badge {
   border-color: #ffe27a;
 }
 
-/* ESTADOS */
+
 .status-badge.badge-open {
   --background: #ffe3e3;
   --color: #d40000;
