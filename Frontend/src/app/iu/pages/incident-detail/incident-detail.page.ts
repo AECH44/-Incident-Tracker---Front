@@ -82,7 +82,9 @@ export class IncidentDetailPage
 
     if (localIncident) {
 
-      this.incident = localIncident;
+      this.incident = {
+        ...localIncident
+      };
 
       return;
     }
@@ -95,7 +97,10 @@ export class IncidentDetailPage
           data.find(i => i.id === id);
 
         if (found) {
-          this.incident = found;
+
+          this.incident = {
+            ...found
+          };
         }
       });
   }
@@ -121,6 +126,9 @@ export class IncidentDetailPage
       this.incident.status =
         Status.ACKNOWLEDGED;
 
+      this.incident.severity =
+        Severity.P2;
+
       this.incident.updatedAt =
         new Date().toISOString();
 
@@ -138,6 +146,9 @@ export class IncidentDetailPage
       this.incident.status =
         Status.RESOLVED;
 
+      this.incident.severity =
+        Severity.P3;
+
       this.incident.updatedAt =
         new Date().toISOString();
 
@@ -147,14 +158,18 @@ export class IncidentDetailPage
 
   canAcknowledge(): boolean {
 
-    return this.incident.status ===
-      Status.OPEN;
+    return (
+      this.incident.status ===
+      Status.OPEN
+    );
   }
 
   canResolve(): boolean {
 
-    return this.incident.status ===
-      Status.ACKNOWLEDGED;
+    return (
+      this.incident.status ===
+      Status.ACKNOWLEDGED
+    );
   }
 
   getSeverityClass() {

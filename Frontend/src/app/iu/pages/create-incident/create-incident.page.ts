@@ -176,14 +176,8 @@ export class CreateIncidentPage
         new Date().toISOString()
     };
 
-    const incidents =
-      this.storageService
-        .getIncidents();
-
-    incidents.unshift(newIncident);
-
-    this.storageService
-      .saveIncidents(incidents);
+   this.storageService
+  .addIncident(newIncident);
 
     const toast =
       await this.toastCtrl.create({

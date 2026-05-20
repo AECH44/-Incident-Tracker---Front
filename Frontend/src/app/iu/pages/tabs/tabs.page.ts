@@ -5,8 +5,7 @@ import {
   IonTabBar,
   IonTabButton,
   IonIcon,
-  IonLabel,
-  IonRouterOutlet
+  IonLabel
 } from '@ionic/angular/standalone';
 import { addIcons } from 'ionicons';
 import { home, documentText, time, person, notificationsOutline } from 'ionicons/icons';
@@ -29,7 +28,6 @@ addIcons({
     IonTabButton,
     IonIcon,
     IonLabel,
-    IonRouterOutlet,
     RouterModule
   ]
 })

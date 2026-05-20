@@ -1,4 +1,10 @@
-import { Component, OnInit, OnDestroy, inject } from '@angular/core';
+import {
+  Component,
+  OnInit,
+  OnDestroy,
+  inject
+} from '@angular/core';
+
 import { CommonModule } from '@angular/common';
 
 import { Router } from '@angular/router';
@@ -62,7 +68,8 @@ import { NotificationsComponent } from 'src/app/iu/components/notifications/noti
     IonMenuButton
   ]
 })
-export class HomePage implements OnInit, OnDestroy {
+export class HomePage
+  implements OnInit, OnDestroy {
 
   incidents: Incident[] = [];
 
@@ -77,16 +84,30 @@ export class HomePage implements OnInit, OnDestroy {
   readonly Severity = Severity;
   readonly Status = Status;
 
-  private popoverCtrl = inject(PopoverController);
-  private router = inject(Router);
+  private popoverCtrl =
+    inject(PopoverController);
 
-  private incidentsSubscription?: Subscription;
-  private sseSubscription?: Subscription;
+  private router =
+    inject(Router);
+
+  private incidentsSubscription?:
+    Subscription;
+
+  private sseSubscription?:
+    Subscription;
+
+  private storageSubscription?:
+    Subscription;
 
   constructor(
-    private getIncidentsUseCase: GetIncidentsUseCase,
-    private listenIncidentsUseCase: ListenIncidentsUseCase,
-    private storageService: StorageService
+    private getIncidentsUseCase:
+      GetIncidentsUseCase,
+
+    private listenIncidentsUseCase:
+      ListenIncidentsUseCase,
+
+    private storageService:
+      StorageService
   ) {}
 
   ngOnInit() {
@@ -94,6 +115,8 @@ export class HomePage implements OnInit, OnDestroy {
     this.loadIncidents();
 
     this.listenRealtimeIncidents();
+
+    this.listenLocalChanges();
   }
 
   ionViewWillEnter() {
@@ -103,42 +126,69 @@ export class HomePage implements OnInit, OnDestroy {
 
   ngOnDestroy() {
 
-    this.incidentsSubscription?.unsubscribe();
+    this.incidentsSubscription
+      ?.unsubscribe();
 
-    this.sseSubscription?.unsubscribe();
+    this.sseSubscription
+      ?.unsubscribe();
+
+    this.storageSubscription
+      ?.unsubscribe();
   }
 
-loadIncidents() {
+  loadIncidents() {
 
-  this.loading = true;
+    this.loading = true;
 
-  this.incidentsSubscription =
-    this.getIncidentsUseCase
-      .execute()
-      .subscribe({
+    this.incidentsSubscription =
+      this.getIncidentsUseCase
+        .execute()
+        .subscribe({
 
-        next: (incidents) => {
+          next: (incidents) => {
 
-          this.incidents = incidents;
+            const localIncidents =
+              this.storageService
+                .getIncidents();
+
+            this.incidents =
+              localIncidents.length > 0
+                ? localIncidents
+                : incidents;
+
+            this.checkCriticalIncidents();
+
+            this.loading = false;
+          },
+
+          error: (err) => {
+
+            console.error(
+              'Error loading incidents',
+              err
+            );
+
+            this.error = true;
+
+            this.loading = false;
+          }
+        });
+  }
+
+  listenLocalChanges() {
+
+    this.storageSubscription =
+      this.storageService
+        .incidents$
+        .subscribe(incidents => {
+
+          this.incidents = [
+            ...incidents
+          ];
 
           this.checkCriticalIncidents();
-
-          this.loading = false;
-        },
-
-        error: (err) => {
-
-          console.error(
-            'Error loading incidents',
-            err
-          );
-
-          this.error = true;
-
-          this.loading = false;
-        }
-      });
-}
+        });
+  }
 
   listenRealtimeIncidents() {
 
@@ -161,7 +211,14 @@ loadIncidents() {
 
             if (!exists) {
 
-              this.incidents.unshift(incident);
+              this.incidents.unshift(
+                incident
+              );
+
+              this.storageService
+                .saveIncidents(
+                  this.incidents
+                );
 
               this.checkCriticalIncidents();
             }
@@ -180,17 +237,21 @@ loadIncidents() {
   checkCriticalIncidents() {
 
     const criticals =
-      this.incidents.filter(incident => {
+      this.incidents.filter(
+        incident => {
 
-        return (
+          return (
 
-          incident.severity === Severity.P1 &&
+            incident.severity ===
+              Severity.P1 &&
 
-          incident.status === Status.OPEN
-        );
-      });
+            incident.status ===
+              Status.OPEN
+          );
+        });
 
-    this.criticalCount = criticals.length;
+    this.criticalCount =
+      criticals.length;
 
     this.hasCriticalAlert =
       this.criticalCount > 0;
@@ -206,7 +267,8 @@ loadIncidents() {
     const popover =
       await this.popoverCtrl.create({
 
-        component: NotificationsComponent,
+        component:
+          NotificationsComponent,
 
         event: ev,
 
@@ -233,10 +295,10 @@ loadIncidents() {
   }
 
   trackByIncidentId(
-  index: number,
-  incident: Incident
-): string {
+    index: number,
+    incident: Incident
+  ): string {
 
-  return incident.id;
-}
+    return incident.id;
+  }
 }

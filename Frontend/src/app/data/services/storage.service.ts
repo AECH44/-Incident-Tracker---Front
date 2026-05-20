@@ -1,5 +1,7 @@
 import { Injectable } from '@angular/core';
 
+import { BehaviorSubject } from 'rxjs';
+
 import { Incident } from 'src/app/core/models/incident.model';
 
 @Injectable({
@@ -8,6 +10,14 @@ import { Incident } from 'src/app/core/models/incident.model';
 export class StorageService {
 
   private readonly INCIDENTS_KEY = 'incidents';
+
+  private incidentsSubject =
+    new BehaviorSubject<Incident[]>(
+      this.getIncidents()
+    );
+
+  incidents$ =
+    this.incidentsSubject.asObservable();
 
   getIncidents(): Incident[] {
 
@@ -60,6 +70,10 @@ export class StorageService {
         JSON.stringify(incidents)
       );
 
+      this.incidentsSubject.next(
+        [...incidents]
+      );
+
     } catch (error) {
 
       console.error(
@@ -73,7 +87,8 @@ export class StorageService {
     incident: Incident
   ): void {
 
-    const incidents = this.getIncidents();
+    const incidents =
+      this.getIncidents();
 
     incidents.unshift(incident);
 
@@ -84,16 +99,24 @@ export class StorageService {
     updatedIncident: Incident
   ): void {
 
-    const incidents = this.getIncidents();
+    const incidents =
+      this.getIncidents();
 
-    const updated = incidents.map(incident => {
+    const updated =
+      incidents.map(incident => {
 
-      if (incident.id === updatedIncident.id) {
-        return updatedIncident;
-      }
+        if (
+          incident.id ===
+          updatedIncident.id
+        ) {
 
-      return incident;
-    });
+          return {
+            ...updatedIncident
+          };
+        }
+
+        return incident;
+      });
 
     this.saveIncidents(updated);
   }
@@ -104,6 +127,16 @@ export class StorageService {
 
     return this
       .getIncidents()
-      .find(incident => incident.id === id);
+      .find(
+        incident =>
+          incident.id === id
+      );
+  }
+
+  refreshIncidents(): void {
+
+    this.incidentsSubject.next(
+      [...this.getIncidents()]
+    );
   }
 }
